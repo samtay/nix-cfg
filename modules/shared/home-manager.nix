@@ -35,15 +35,6 @@ let name = "%NAME%";
       # Remove history data we don't want to see
       export HISTIGNORE="pwd:ls:cd"
 
-      # Emacs is my editor
-      export ALTERNATE_EDITOR=""
-      export EDITOR="emacsclient -t"
-      export VISUAL="emacsclient -c -a emacs"
-
-      e() {
-          emacsclient -t "$@"
-      }
-
       # nix shortcuts
       shell() {
           nix-shell '<nixpkgs>' -A "$1"
