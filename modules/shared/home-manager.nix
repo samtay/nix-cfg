@@ -23,7 +23,8 @@ let name = "Sam Tay";
         format = "ssh";
       };
       "gpg \"ssh\"" = {
-        program = "${lib.getExe' pkgs._1password-gui "op-ssh-sign"}";
+        program = "${pkgs._1password-gui}/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
+        # program = "${lib.getExe' pkgs._1password-gui "op-ssh-sign"}";
         # program = "/opt/1Password/op-ssh-sign";
       };
       branch = {
