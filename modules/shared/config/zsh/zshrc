@@ -33,6 +33,37 @@ alias -g grba='git rebase --abort'
 alias -g dot='git --git-dir=$HOME/.local/share/dotfiles --work-tree=$HOME'
 alias -g vim='nvim'
 alias -g sb='supabase'
+alias -g reload-zsh='exec zsh'
+alias -g get-simpsons-img='echo "http://imgur.com/a/T81t9copy" | copy'
+g2() {
+  cd "$HOME/code/$1" && ls -Hlh --color=auto
+}
+rgl() {
+  rg --color=always "$@" | less -R
+}
+jql() {
+  jq -C "$@" | less -R
+}
+backup() {
+  mv $1{,.bak}
+}
+find-process() {
+  ps aux | grep "$@"
+}
+surfcam() {
+  local cam="$1"
+  if [ -z "$cam" ]; then
+    read "cam?w: washout
+ht: hightower
+16: 16th st s
+Pick one: "
+  fi
+  case $cam in
+    w|washout) url='cdn-ec/ec-washout/chunklist.m3u8' ;;
+    16) url='cdn-ec/ec-cocoastreets/chunklist.m3u8'
+  esac
+  vlc "https://cams.cdn-surfline.com/$url"
+}
 
 # Yank to the system clipboard
 function vi-yank-xclip {
@@ -182,3 +213,7 @@ export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=white"
 
 export FZF_DEFAULT_COMMAND="fd --color=always --hidden --exclude .git"
 export FZF_CTRL_T_OPTS="--no-multi --bind 'tab:down' --bind 'btab:up'"
+
+# custom completes
+
+compdef "_files -W $HOME/code" g2
