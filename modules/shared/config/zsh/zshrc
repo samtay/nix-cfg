@@ -64,6 +64,9 @@ bindkey -v
 # Prompt for spelling correction of commands.
 #setopt CORRECT
 
+# Fix annoying match problem with # and ^ etc.
+unsetopt nomatch
+
 # Customize spelling correction prompt.
 #SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
 

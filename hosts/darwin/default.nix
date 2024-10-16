@@ -69,4 +69,10 @@ let user = "samtay"; in
       };
     };
   };
+
+  fonts.packages = with pkgs; [
+    (nerdfonts.override { fonts = [ "FiraCode" ]; })
+  ];
+
+  security.pam.enableSudoTouchIdAuth = true;
 }
