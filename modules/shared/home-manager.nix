@@ -1,353 +1,204 @@
 { config, pkgs, lib, ... }:
 
-let name = "%NAME%";
-    user = "%USER%";
-    email = "%EMAIL%"; in
+let name = "Sam Tay";
+    user = "samtay";
+    email = "samctay@pm.me"; in
 {
   # Shared shell configuration
   zsh = {
     enable = true;
-    autocd = false;
-    plugins = [
-      {
-        name = "powerlevel10k";
-        src = pkgs.zsh-powerlevel10k;
-        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
-      }
-      {
-        name = "powerlevel10k-config";
-        src = lib.cleanSource ./config;
-        file = "p10k.zsh";
-      }
-    ];
-
-    initExtraFirst = ''
-      if [[ -f /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]]; then
-        . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
-        . /nix/var/nix/profiles/default/etc/profile.d/nix.sh
-      fi
-
-      # Define variables for directories
-      export PATH=$HOME/.pnpm-packages/bin:$HOME/.pnpm-packages:$PATH
-      export PATH=$HOME/.npm-packages/bin:$HOME/bin:$PATH
-      export PATH=$HOME/.local/share/bin:$PATH
-
-      # Remove history data we don't want to see
-      export HISTIGNORE="pwd:ls:cd"
-
-      # nix shortcuts
-      shell() {
-          nix-shell '<nixpkgs>' -A "$1"
-      }
-
-      # Use difftastic, syntax-aware diffing
-      alias diff=difft
-
-      # Always color ls and group directories
-      alias ls='ls --color=auto'
-    '';
   };
 
   git = {
     enable = true;
-    ignores = [ "*.swp" ];
     userName = name;
     userEmail = email;
-    lfs = {
-      enable = true;
+    signing = {
+      key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILSOyLI6M+OWZsE10mkZMcbnQ1a/wnjPgX1eNHJ6iYYo";
+      signByDefault = true;
     };
+    ignores = [ "*.swp" ".DS_Store" ];
     extraConfig = {
-      init.defaultBranch = "main";
-      core = {
-	    editor = "vim";
-        autocrlf = "input";
+      gpg = {
+        format = "ssh";
       };
-      pull.rebase = true;
-      rebase.autoStash = true;
+      "gpg \"ssh\"" = {
+        program = "${lib.getExe' pkgs._1password-gui "op-ssh-sign"}";
+        # program = "/opt/1Password/op-ssh-sign";
+      };
+      branch = {
+        autosetuprebase = "always";
+        rebase = true;
+      };
+      advice = {
+        detachedHead = false;
+      };
+      init = {
+        defaultBranch = "main";
+      };
+      push = {
+        autoSetupRemote = true;
+      };
+    };
+    attributes = ["*.pdf diff=pdf"];
+    delta = {
+      enable = true;
+      options = {
+        navigate = true;
+        side-by-side = true;
+        line-numbers = true;
+        syntax-theme = "gruvbox-light";
+        whitespace-error-style = "22 reverse"; # ?
+      };
+    };
+    aliases = {
+      # List commits in short form, with colors and branch/tag annotations
+      ls = "log --pretty=format:\"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]\" --decorate";
+
+      # List commits showing changes files
+      ll = "log --pretty=format:\"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]\" --decorate --numstat";
+
+      # List oneline commits showing dates
+      lds = "log --pretty=format:\"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]\" --decorate --date=short";
+
+      # List oneline commits showing relative dates
+      ld = "log --pretty=format:\"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]\" --decorate --date=relative";
+
+      # Basic oneline
+      le = "log --oneline --decorate";
+
+      # Better git log
+      lg = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
+
+      # Display a log tree
+      logtree = "log --graph --oneline --decorate --all";
+
+      # Show repository contributers
+      who = "shortlog -n -s --no-merges";
+
+      # Information about the current commit
+      whatis = "show -s --pretty='tformat:%h (%s, %ad)' --date=short";
+
+      # See all commits related to a file
+      filelog = "log -u";
+      fl = "log -u";
+
+      # Concise commits related to file
+      follow = "log --follow --stat";
+
+      # Show modified files in last commit
+      dl = "\"!git ll -1\"";
+
+      # Show a diff of the last commit
+      dlc = "show HEAD^";
+
+      # Show content (full diff) of a commit given a revision
+      dr  = "\"!f() { git diff \"$1\"^..\"$1\"; }; f\"";
+      lc  = "\"!f() { git ll \"$1\"^..\"$1\"; }; f\"";
+      diffr  = "\"!f() { git diff \"$1\"^..\"$1\"; }; f\"";
+
+      # Find a file path in codebase
+      f = "\"!git ls-files | grep -i\"";
+
+      # Search/grep your entire codebase for a string
+      grep = "grep -Ii";
+      gr = "grep -Ii";
+
+      # Grep from root folder
+      gra = "\"!f() { A=$(pwd) && TOPLEVEL=$(git rev-parse --show-toplevel) && cd $TOPLEVEL && git grep --full-name -In $1 | xargs -I{} echo $TOPLEVEL/{} && cd $A; }; f\"";
+
+      # Output your aliases
+      la = "!git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /'";
+
+      # Assume a file as unchanged
+      assume = "update-index --assume-unchanged";
+
+      # Unassume a file
+      unassume = "update-index --no-assume-unchanged";
+
+      # Show assumed files
+      assumed = "\"!git ls-files -v | grep ^h | cut -c 3-\"";
+
+      # Unassume all assumed files
+      unassumeall = "\"!git assumed | xargs git update-index --no-assume-unchanged\"";
+
+      # Assume all
+      assumeall = "\"!git st -s | awk {'print $2'} | xargs git assume\"";
+
+      # Show the last tag
+      lasttag = "describe --tags --abbrev=0";
+      lt = "describe --tags --abbrev=0";
+
+      # Shows a list of files that have a merge conflict
+      conflicts = "diff --name-only --diff-filter=U";
+
+      # Unstages a file. Use like 'git unstage filename'
+      unstage = "reset HEAD --";
+
+      # Resets all uncomitted changes and files
+      abort = "reset --hard HEAD";
+
+      # Undo last commit
+      undo = "reset HEAD~1";
+
+      # Change last commit message
+      recommit = "commit --amend";
+
+      # Get the current branch name (not so useful in itself, but used in
+      # other aliases)
+      branch-name = "\"!git rev-parse --abbrev-ref HEAD\"";
+
+      # List all commits that have not been pushed to origin
+      unpushed = "log --branches --not --remotes --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
+
+      # See what's new since the last command
+      new = "!sh -c 'git log $1@{1}..$1@{0} \"$@\"'";
+
+      # Completely delete a branch (local and origin)
+      rmb = "!sh -c 'git branch -D $1 && git push origin $1 --delete' -";
+
+      # Merging
+      ours = "\"!f() { git co --ours $@ && git add $@; }; f\"";
+      theirs = "\"!f() { git co --theirs $@ && git add $@; }; f\"";
+
+      # Basic shortcuts
+      cp = "cherry-pick";
+      st = "status -s";
+      cl = "clone";
+      ci = "commit";
+      co = "checkout";
+      br = "branch";
+      diff = "diff --word-diff";
+      dc = "diff --cached";
+
+      # Reset commands
+      r = "reset";
+      r1 = "reset HEAD^";
+      r2 = "reset HEAD^^";
+      rh = "reset --hard";
+      rh1 = "reset HEAD^ --hard";
+      rh2 = "reset HEAD^^ --hard";
+
+      # Stash operations
+      sl = "stash list";
+      sa = "stash apply";
+      pop = "stash pop";
+      ss = "stash save";
     };
   };
 
-  vim = {
+  neovim = {
     enable = true;
-    plugins = with pkgs.vimPlugins; [ vim-airline vim-airline-themes vim-startify vim-tmux-navigator ];
-    settings = { ignorecase = true; };
-    extraConfig = ''
-      "" General
-      set number
-      set history=1000
-      set nocompatible
-      set modelines=0
-      set encoding=utf-8
-      set scrolloff=3
-      set showmode
-      set showcmd
-      set hidden
-      set wildmenu
-      set wildmode=list:longest
-      set cursorline
-      set ttyfast
-      set nowrap
-      set ruler
-      set backspace=indent,eol,start
-      set laststatus=2
-      set clipboard=autoselect
-
-      " Dir stuff
-      set nobackup
-      set nowritebackup
-      set noswapfile
-      set backupdir=~/.config/vim/backups
-      set directory=~/.config/vim/swap
-
-      " Relative line numbers for easy movement
-      set relativenumber
-      set rnu
-
-      "" Whitespace rules
-      set tabstop=8
-      set shiftwidth=2
-      set softtabstop=2
-      set expandtab
-
-      "" Searching
-      set incsearch
-      set gdefault
-
-      "" Statusbar
-      set nocompatible " Disable vi-compatibility
-      set laststatus=2 " Always show the statusline
-      let g:airline_theme='bubblegum'
-      let g:airline_powerline_fonts = 1
-
-      "" Local keys and such
-      let mapleader=","
-      let maplocalleader=" "
-
-      "" Change cursor on mode
-      :autocmd InsertEnter * set cul
-      :autocmd InsertLeave * set nocul
-
-      "" File-type highlighting and configuration
-      syntax on
-      filetype on
-      filetype plugin on
-      filetype indent on
-
-      "" Paste from clipboard
-      nnoremap <Leader>, "+gP
-
-      "" Copy from clipboard
-      xnoremap <Leader>. "+y
-
-      "" Move cursor by display lines when wrapping
-      nnoremap j gj
-      nnoremap k gk
-
-      "" Map leader-q to quit out of window
-      nnoremap <leader>q :q<cr>
-
-      "" Move around split
-      nnoremap <C-h> <C-w>h
-      nnoremap <C-j> <C-w>j
-      nnoremap <C-k> <C-w>k
-      nnoremap <C-l> <C-w>l
-
-      "" Easier to yank entire line
-      nnoremap Y y$
-
-      "" Move buffers
-      nnoremap <tab> :bnext<cr>
-      nnoremap <S-tab> :bprev<cr>
-
-      "" Like a boss, sudo AFTER opening the file to write
-      cmap w!! w !sudo tee % >/dev/null
-
-      let g:startify_lists = [
-        \ { 'type': 'dir',       'header': ['   Current Directory '. getcwd()] },
-        \ { 'type': 'sessions',  'header': ['   Sessions']       },
-        \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      }
-        \ ]
-
-      let g:startify_bookmarks = [
-        \ '~/.local/share/src',
-        \ ]
-
-      let g:airline_theme='bubblegum'
-      let g:airline_powerline_fonts = 1
-      '';
-     };
-
-  alacritty = {
-    enable = true;
-    settings = {
-      cursor = {
-        style = "Block";
-      };
-
-      window = {
-        opacity = 1.0;
-        padding = {
-          x = 24;
-          y = 24;
-        };
-      };
-
-      font = {
-        normal = {
-          family = "MesloLGS NF";
-          style = "Regular";
-        };
-        size = lib.mkMerge [
-          (lib.mkIf pkgs.stdenv.hostPlatform.isLinux 10)
-          (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin 14)
-        ];
-      };
-
-      dynamic_padding = true;
-      decorations = "full";
-      title = "Terminal";
-      class = {
-        instance = "Alacritty";
-        general = "Alacritty";
-      };
-
-      colors = {
-        primary = {
-          background = "0x1f2528";
-          foreground = "0xc0c5ce";
-        };
-
-        normal = {
-          black = "0x1f2528";
-          red = "0xec5f67";
-          green = "0x99c794";
-          yellow = "0xfac863";
-          blue = "0x6699cc";
-          magenta = "0xc594c5";
-          cyan = "0x5fb3b3";
-          white = "0xc0c5ce";
-        };
-
-        bright = {
-          black = "0x65737e";
-          red = "0xec5f67";
-          green = "0x99c794";
-          yellow = "0xfac863";
-          blue = "0x6699cc";
-          magenta = "0xc594c5";
-          cyan = "0x5fb3b3";
-          white = "0xd8dee9";
-        };
-      };
-    };
   };
 
-  ssh = {
+  kitty = {
     enable = true;
-    includes = [
-      (lib.mkIf pkgs.stdenv.hostPlatform.isLinux
-        "/home/${user}/.ssh/config_external"
-      )
-      (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin
-        "/Users/${user}/.ssh/config_external"
-      )
-    ];
-    matchBlocks = {
-      "github.com" = {
-        identitiesOnly = true;
-        identityFile = [
-          (lib.mkIf pkgs.stdenv.hostPlatform.isLinux
-            "/home/${user}/.ssh/id_github"
-          )
-          (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin
-            "/Users/${user}/.ssh/id_github"
-          )
-        ];
-      };
-    };
+    extraConfig = builtins.readFile ./config/kitty/kitty.conf;
+    themeFile = "GruvboxMaterialLightMedium";
   };
 
   tmux = {
     enable = true;
-    plugins = with pkgs.tmuxPlugins; [
-      vim-tmux-navigator
-      sensible
-      yank
-      prefix-highlight
-      {
-        plugin = power-theme;
-        extraConfig = ''
-           set -g @tmux_power_theme 'gold'
-        '';
-      }
-      {
-        plugin = resurrect; # Used by tmux-continuum
-
-        # Use XDG data directory
-        # https://github.com/tmux-plugins/tmux-resurrect/issues/348
-        extraConfig = ''
-          set -g @resurrect-dir '$HOME/.cache/tmux/resurrect'
-          set -g @resurrect-capture-pane-contents 'on'
-          set -g @resurrect-pane-contents-area 'visible'
-        '';
-      }
-      {
-        plugin = continuum;
-        extraConfig = ''
-          set -g @continuum-restore 'on'
-          set -g @continuum-save-interval '5' # minutes
-        '';
-      }
-    ];
-    terminal = "screen-256color";
-    prefix = "C-x";
-    escapeTime = 10;
-    historyLimit = 50000;
-    extraConfig = ''
-      # Remove Vim mode delays
-      set -g focus-events on
-
-      # Enable full mouse support
-      set -g mouse on
-
-      # -----------------------------------------------------------------------------
-      # Key bindings
-      # -----------------------------------------------------------------------------
-
-      # Unbind default keys
-      unbind C-b
-      unbind '"'
-      unbind %
-
-      # Split panes, vertical or horizontal
-      bind-key x split-window -v
-      bind-key v split-window -h
-
-      # Move around panes with vim-like bindings (h,j,k,l)
-      bind-key -n M-k select-pane -U
-      bind-key -n M-h select-pane -L
-      bind-key -n M-j select-pane -D
-      bind-key -n M-l select-pane -R
-
-      # Smart pane switching with awareness of Vim splits.
-      # This is copy paste from https://github.com/christoomey/vim-tmux-navigator
-      is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
-        | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
-      bind-key -n 'C-h' if-shell "$is_vim" 'send-keys C-h'  'select-pane -L'
-      bind-key -n 'C-j' if-shell "$is_vim" 'send-keys C-j'  'select-pane -D'
-      bind-key -n 'C-k' if-shell "$is_vim" 'send-keys C-k'  'select-pane -U'
-      bind-key -n 'C-l' if-shell "$is_vim" 'send-keys C-l'  'select-pane -R'
-      tmux_version='$(tmux -V | sed -En "s/^tmux ([0-9]+(.[0-9]+)?).*/\1/p")'
-      if-shell -b '[ "$(echo "$tmux_version < 3.0" | bc)" = 1 ]' \
-        "bind-key -n 'C-\\' if-shell \"$is_vim\" 'send-keys C-\\'  'select-pane -l'"
-      if-shell -b '[ "$(echo "$tmux_version >= 3.0" | bc)" = 1 ]' \
-        "bind-key -n 'C-\\' if-shell \"$is_vim\" 'send-keys C-\\\\'  'select-pane -l'"
-
-      bind-key -T copy-mode-vi 'C-h' select-pane -L
-      bind-key -T copy-mode-vi 'C-j' select-pane -D
-      bind-key -T copy-mode-vi 'C-k' select-pane -U
-      bind-key -T copy-mode-vi 'C-l' select-pane -R
-      bind-key -T copy-mode-vi 'C-\' select-pane -l
-      '';
-    };
+    # TODO: bring in old tmux config
+  };
 }

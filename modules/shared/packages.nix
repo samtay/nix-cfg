@@ -2,25 +2,21 @@
 
 with pkgs; [
   # General packages for development and system management
-  alacritty
+  kitty
+  obsidian
   aspell
   aspellDicts.en
   bash-completion
-  bat
-  btop
   coreutils
   killall
   neofetch
   openssh
-  sqlite
   wget
   zip
+  tealdeer
 
   # Encryption and security tools
-  age
-  age-plugin-yubikey
   gnupg
-  libfido2
 
   # Cloud-related tools and SDKs
   docker
@@ -29,12 +25,12 @@ with pkgs; [
   # Media-related packages
   dejavu_fonts
   ffmpeg
-  fd
+  fira-code
   font-awesome
   hack-font
   noto-fonts
   noto-fonts-emoji
-  meslo-lgs-nf
+  # meslo-lgs-nf
 
   # Node.js development tools
   nodePackages.npm # globally install npm
@@ -42,19 +38,13 @@ with pkgs; [
   nodejs
 
   # Text and terminal utilities
+  fd
   htop
-  hunspell
   iftop
-  jetbrains-mono
   jq
   ripgrep
   tree
   tmux
   unrar
   unzip
-  zsh-powerlevel10k
-
-  # Python packages
-  python39
-  python39Packages.virtualenv # globally install virtualenv
 ]

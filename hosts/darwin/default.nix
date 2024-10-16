@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 
-let user = "%USER%"; in
+let user = "samtay"; in
 
 {
   imports = [
@@ -52,7 +52,7 @@ let user = "%USER%"; in
       };
 
       dock = {
-        autohide = false;
+        autohide = true;
         show-recents = false;
         launchanim = true;
         orientation = "bottom";
