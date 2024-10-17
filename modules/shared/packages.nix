@@ -14,6 +14,7 @@ with pkgs; [
   wget
   zip
   tealdeer
+  nix-your-shell
 
   # Encryption and security tools
   gnupg
@@ -32,10 +33,14 @@ with pkgs; [
   noto-fonts-emoji
   # meslo-lgs-nf
 
-  # Node.js development tools
+  # node development tools
   nodePackages.npm # globally install npm
   nodePackages.prettier
   nodejs
+
+  # other langs
+  rustup
+  ghciwatch
 
   # Text and terminal utilities
   fd

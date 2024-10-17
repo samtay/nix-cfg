@@ -136,7 +136,7 @@ zstyle ':zim:input' double-dot-expand yes
 # Set a custom terminal title format using prompt expansion escape sequences.
 # See http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html#Simple-Prompt-Escapes
 # If none is provided, the default '%n@%m: %~' is used.
-#zstyle ':zim:termtitle' format '%1~'
+zstyle ':zim:termtitle' format '%1~'
 
 #
 # zsh-autosuggestions
@@ -217,3 +217,8 @@ export FZF_CTRL_T_OPTS="--no-multi --bind 'tab:down' --bind 'btab:up'"
 # custom completes
 
 compdef "_files -W $HOME/code" g2
+
+# nix me
+if command -v nix-your-shell > /dev/null; then
+  nix-your-shell zsh | source /dev/stdin
+fi
