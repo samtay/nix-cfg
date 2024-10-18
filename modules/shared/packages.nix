@@ -15,6 +15,7 @@ with pkgs; [
   zip
   tealdeer
   nix-your-shell
+  nixd
 
   # Encryption and security tools
   gnupg
