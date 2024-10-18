@@ -61,7 +61,7 @@ in
   };
 
   # Fully declarative dock using the latest from Nix Store
-  local.dock.enable = true;
+  local.dock.enable = false; # this doesn't seem to work anyway
   local.dock.entries = [
     { path = "/Applications/Firefox.app/"; }
     { path = "/Applications/Slack.app/"; }
