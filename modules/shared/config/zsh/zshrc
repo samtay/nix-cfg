@@ -35,6 +35,7 @@ alias -g vim='nvim'
 alias -g sb='supabase'
 alias -g reload-zsh='exec zsh'
 alias -g get-simpsons-img='echo "http://imgur.com/a/T81t9copy" | copy'
+alias -g reload-zsh='exec zsh'
 g2() {
   cd "$HOME/code/$1" && ls -Hlh --color=auto
 }
