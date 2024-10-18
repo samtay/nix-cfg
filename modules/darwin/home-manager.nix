@@ -20,6 +20,7 @@ in
 
   homebrew = {
     enable = true;
+    brews = ["ghcup"];
     casks = pkgs.callPackage ./casks.nix {};
     # onActivation.cleanup = "uninstall";
 
