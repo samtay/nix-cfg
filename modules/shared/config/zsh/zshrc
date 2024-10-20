@@ -10,7 +10,7 @@
 export FLYCTL_INSTALL="/home/sam/.fly"
 export PATH="$FLYCTL_INSTALL/bin:$PATH"
 export PATH="$PATH:/home/sam/.foundry/bin"
-export PATH="$HOME/.cabal/bin:$PATH"
+export PATH="$HOME/.cabal/bin:$HOME/.ghcup/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.npm-global/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
