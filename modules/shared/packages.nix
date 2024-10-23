@@ -8,6 +8,7 @@ with pkgs; [
   aspellDicts.en
   bash-completion
   coreutils
+  fzf
   killall
   neofetch
   openssh
