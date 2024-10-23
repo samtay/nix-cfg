@@ -10,10 +10,9 @@ return {
   { import = "astrocommunity.pack.bash" },
   -- sqls is a POS
   -- { import = "astrocommunity.pack.sql" },
-  -- { import = "astrocommunity.pack.dart" },
   { import = "astrocommunity.pack.rust" },
-  -- { import = "astrocommunity.pack.go" },
-  { import = "astrocommunity.pack.haskell" },
+  -- just too much of a PITA to customize
+  -- { import = "astrocommunity.pack.haskell" },
   { import = "astrocommunity.pack.lua" },
   { import = "astrocommunity.pack.json" },
   { import = "astrocommunity.pack.nix" },
@@ -21,38 +20,4 @@ return {
   { import = "astrocommunity.pack.tailwindcss" },
   { import = "astrocommunity.markdown-and-latex.vimtex" },
   { import = "astrocommunity.completion.copilot-lua" },
-  {
-    "zbirenbaum/copilot.lua",
-    opts = {
-      suggestion = {
-        keymap = {
-          accept = "<C-CR>",
-          accept_word = false,
-          accept_line = false,
-          next = "<C-.>",
-          prev = "<C-,>",
-          dismiss = "<C/>",
-        },
-      },
-    },
-  },
-  {
-    "gruvbox.nvim",
-    opts = {
-      italic = {
-        comments = true,
-      },
-    },
-  },
-  -- {
-  --   "akinsho/flutter-tools.nvim",
-  --   opts = function()
-  --     local lsp = require("astronvim.utils.lsp").config "dartls"
-  --     lsp.settings.analysisExcludedFolders = { "/opt/flutter/bin/cache/pkg/" }
-  --     return {
-  --       lsp = lsp,
-  --       debugger = { enabled = true },
-  --     }
-  --   end,
-  -- },
 }

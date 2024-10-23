@@ -81,6 +81,16 @@ return {
           analysisExcludedFolders = { "/opt/flutter/bin/cache/pkg/" },
         },
       },
+      hls = {
+        cmd = { "static-ls" },
+        settings = {
+          haskell = {
+            cabalFormattingProvider = "cabalfmt",
+            formattingProvider = "fourmolu",
+          },
+        },
+        filetypes = { "haskell", "lhaskell", "cabal" },
+      },
     },
     -- customize how language servers are attached
     handlers = {

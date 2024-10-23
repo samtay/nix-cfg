@@ -139,4 +139,36 @@ return {
       opts.defaults.mappings.i["<S-TAB>"] = actions.move_selection_previous
     end,
   },
+
+  -- customizing community packs
+  {
+    "zbirenbaum/copilot.lua",
+    opts = {
+      suggestion = {
+        keymap = {
+          accept = "<C-CR>",
+          accept_word = false,
+          accept_line = false,
+          next = "<C-.>",
+          prev = "<C-,>",
+          dismiss = "<C/>",
+        },
+      },
+    },
+  },
+  {
+    "gruvbox.nvim",
+    opts = {
+      italic = {
+        comments = true,
+      },
+    },
+  },
+  {
+    "mrcjkb/haskell-tools.nvim",
+    config = function()
+      vim.g.haskell_tools = { hls = { cmd = function() return { "static-ls", "" } end } }
+    end,
+  },
+  { "luc-tielen/telescope_hoogle" },
 }
