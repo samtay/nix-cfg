@@ -12,6 +12,7 @@ _:
 
   # Entertainment Tools
   "vlc"
+  "spotify"
 
   # Productivity Tools
   "raycast"
