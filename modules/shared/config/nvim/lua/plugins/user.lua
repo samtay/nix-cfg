@@ -164,11 +164,12 @@ return {
       },
     },
   },
-  {
-    "mrcjkb/haskell-tools.nvim",
-    config = function()
-      vim.g.haskell_tools = { hls = { cmd = function() return { "static-ls", "" } end } }
-    end,
-  },
+  -- {
+  --   "mrcjkb/haskell-tools.nvim",
+  --   config = function()
+  --     vim.g.haskell_tools = { hls = { cmd = function() return { "static-ls", "" } end } }
+  --   end,
+  -- },
   { "luc-tielen/telescope_hoogle" },
+  { "alx741/yesod.vim" },
 }
