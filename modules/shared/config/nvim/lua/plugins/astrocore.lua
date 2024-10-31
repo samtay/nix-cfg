@@ -166,7 +166,7 @@ return {
         ---------------------- dotfiles ----------------------
         ["<Leader>."] = { false, desc = " Dotfiles" },
         ["<Leader>.n"] = {
-          "<cmd>sp ~/code/nix-hm/nvim/<cr>",
+          "<cmd>sp ~/.config/nvim/<cr>",
           desc = "Open nvim directory",
         },
         ["<Leader>.r"] = {
@@ -178,12 +178,16 @@ return {
           desc = "Open kitty config",
         },
         ["<Leader>.x"] = {
-          "<cmd>sp ~/code/nix-hm/xmonad/xmonad.hs<cr>",
+          "<cmd>sp ~/.config/xmonad/xmonad.hs<cr>",
           desc = "Open xmonad config",
         },
         ["<Leader>.h"] = {
-          "<cmd>sp ~/code/nix-hm/<cr>",
+          "<cmd>sp ~/code/nix-cfg/modules/shared/home-manager.nix<cr>",
           desc = "Open home manager config",
+        },
+        ["<Leader>.d"] = {
+          "<cmd>sp ~/code/nix-cfg/<cr>",
+          desc = "Open nix darwin config",
         },
         ["<Leader>.z"] = {
           "<cmd>sp ~/.zshrc<cr>",
