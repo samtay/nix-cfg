@@ -69,6 +69,12 @@ return {
           expr = false,
           desc = "Live grep selection",
         },
+        ["<Leader>h"] = { false, desc = ">>= Haskell" },
+        ["<Leader>hd"] = {
+          "\"zy<cmd>exec 'lua vim.ui.open(\"https://hoogle.internal.mercury.com/?hoogle=' .. escape(@z, ' ') . '\")'<cr>",
+          expr = false,
+          desc = "Open documentation for selected text",
+        },
         ["<C-s>"] = { "<cmd>w !sudo tee > /dev/null %<cr>", desc = "Force save", expr = false },
       },
       i = {
@@ -193,7 +199,7 @@ return {
           "<cmd>sp ~/.zshrc<cr>",
           desc = "Open zshrc",
         },
-        ---------------------- rust  ----------------------
+        ---------------------- rust ----------------------
         ["<Leader>r"] = { false, desc = " Rust" },
         ["<Leader>rr"] = {
           function() vim.cmd.RustLsp "runnables" end,
@@ -218,6 +224,12 @@ return {
         ["<Leader>rp"] = {
           function() vim.cmd.RustLsp "parentModule" end,
           desc = "Go to parent module",
+        },
+        ---------------------- haskell ----------------------
+        ["<Leader>h"] = { false, desc = ">>= Haskell" },
+        ["<Leader>hd"] = {
+          function() vim.ui.open("https://hoogle.internal.mercury.com/?hoogle=" .. vim.fn.expand "<cWORD>") end,
+          desc = "Open documentation for symbol under cursor",
         },
         ---------------------- mobile dev ----------------------
         -- would be nice to gate these on presence of flutter
