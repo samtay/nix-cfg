@@ -170,7 +170,8 @@ return {
   --     vim.g.haskell_tools = { hls = { cmd = function() return { "static-ls", "" } end } }
   --   end,
   -- },
-  { "luc-tielen/telescope_hoogle" },
+  -- This plugin is wack, better off with a couple small custom functions
+  { "psiska/telescope-hoogle.nvim" },
   { "alx741/yesod.vim" },
   {
     "stevearc/conform.nvim",
