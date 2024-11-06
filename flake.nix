@@ -53,6 +53,7 @@
         "create-keys" = mkApp "create-keys" system;
         "check-keys" = mkApp "check-keys" system;
         "rollback" = mkApp "rollback" system;
+        "toggle-darkmode" = mkApp "toggle-darkmode" system;
       };
     in
     {
