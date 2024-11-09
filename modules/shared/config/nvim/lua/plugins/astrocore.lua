@@ -231,6 +231,10 @@ return {
           function() vim.ui.open("https://hoogle.internal.mercury.com/?hoogle=" .. vim.fn.expand "<cWORD>") end,
           desc = "Open documentation for symbol under cursor",
         },
+        ["<Leader>hf"] = {
+          function() vim.cmd("e " .. "config/modelsFiles/" .. vim.fn.expand "<cword>" .. ".persistentmodels") end,
+          desc = "Open persistent model file in MWB",
+        },
         ---------------------- mobile dev ----------------------
         -- would be nice to gate these on presence of flutter
         ["<Leader>m"] = { false, desc = " Mobile Development" },
