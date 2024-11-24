@@ -1,0 +1,12 @@
+{
+  "runspecweb": {
+    "prefix": ["runspecweb", "hspecweb"],
+    "body": ["-- $> :import-spec-web", "-- $> hspecWithEnv spec"],
+    "description": "Insert comment to run spec::SpecWeb"
+  },
+  "runspec": {
+    "prefix": ["runspec", "hspec"],
+    "body": ["-- $> hspec spec"],
+    "description": "Insert comment to run spec::Spec"
+  }
+}
