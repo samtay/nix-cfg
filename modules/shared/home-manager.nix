@@ -202,4 +202,14 @@ let name = "Sam Tay";
     enable = true;
     # TODO: bring in old tmux config
   };
+
+  direnv = {
+    enable = true;
+    config = {
+       global = {
+          hide_env_diff = true;
+          warn_timeout = "30s";
+      };
+    };
+  };
 }
