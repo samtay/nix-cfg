@@ -140,8 +140,19 @@ return {
     "nvim-telescope/telescope.nvim",
     opts = function(_, opts)
       local actions = require "telescope.actions"
+      local layout = require "telescope.actions.layout"
       opts.defaults.mappings.i["<TAB>"] = actions.move_selection_next
       opts.defaults.mappings.i["<S-TAB>"] = actions.move_selection_previous
+      opts.defaults.mappings.n["h"] = actions.results_scrolling_left
+      opts.defaults.mappings.n["l"] = actions.results_scrolling_right
+      opts.defaults.mappings.i["<C-p>"] = layout.toggle_preview
+      opts.defaults.path_display = { "filename_first" }
+      opts.defaults.layout_strategy = "vertical"
+      opts.defaults.layout_config = {
+        prompt_position = "bottom",
+        height = 0.95,
+        preview_cutoff = 0,
+      }
     end,
   },
 
