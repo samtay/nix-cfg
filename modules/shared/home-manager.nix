@@ -171,6 +171,7 @@ let name = "Sam Tay";
       br = "branch";
       diff = "diff --word-diff";
       dc = "diff --cached";
+      fixup = "!git log -n 50 --pretty=format:'%h %s' --no-merges | fzf | cut -c -7 | xargs -o git commit --fixup";
 
       # Reset commands
       r = "reset";
