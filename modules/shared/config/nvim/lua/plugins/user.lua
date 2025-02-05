@@ -199,6 +199,7 @@ return {
       end,
       formatters_by_ft = {
         haskell = { "mwb_format", "fourmolu", stop_after_first = true },
+        -- javascript = { "prettier", "prettierd", stop_after_first = true },
       },
       formatters = {
         mwb_format = {
