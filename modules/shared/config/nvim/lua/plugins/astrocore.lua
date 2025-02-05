@@ -235,6 +235,37 @@ return {
           function() vim.cmd("e " .. "config/modelsFiles/" .. vim.fn.expand "<cword>" .. ".persistentmodels") end,
           desc = "Open persistent model file in MWB",
         },
+        ["<Leader>hr"] = {
+          function() os.execute("touch-revdeps " .. vim.fn.expand "%") end,
+          desc = "Compile this module's reverse dependencies in ghicwatch",
+        },
+        ["<Leader>ha"] = {
+          function() os.execute "touch test/TestMain.hs" end,
+          desc = "Compile all modules in ghciwatch",
+        },
+        ["<Leader>ht"] = {
+          require("helpers").toggle_hspec_comments,
+          desc = "Run this spec in ghciwatch (toggle)",
+        },
+        ["<Leader>hT"] = {
+          function()
+            -- Check if we have an eval line in TestMain
+            local eval_grep_check = vim
+              .system({ "grep", "-q", "-F", "--", "-- $> main", "test/TestMain.hs" }, { text = true })
+              :wait()
+
+            -- If so, remove it and the focused foundational context
+            if eval_grep_check.code == 0 then
+              os.execute "sed -i '/-- $> main/d' test/TestMain.hs"
+              os.execute "sed -i 's/foundationalTests = fcontext/foundationalTests = context/' test/Test/Mercury/Contexts.hs"
+            -- Otherwise add an eval line and focus foundational tests
+            else
+              os.execute "sed -i '/^main :: IO ()$/i -- $> main' test/TestMain.hs"
+              os.execute "sed -i 's/foundationalTests = context/foundationalTests = fcontext/' test/Test/Mercury/Contexts.hs"
+            end
+          end,
+          desc = "Run all foundational tests in ghciwatch (toggle)",
+        },
         ---------------------- mobile dev ----------------------
         -- would be nice to gate these on presence of flutter
         ["<Leader>m"] = { false, desc = " Mobile Development" },
