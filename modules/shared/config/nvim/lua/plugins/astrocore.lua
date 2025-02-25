@@ -300,7 +300,7 @@ return {
           desc = "Pick themes",
         },
         ["<Leader><Leader>"] = {
-          function() require("notify").dismiss { silent = true } end,
+          function() require("notify").dismiss { pending = true, silent = true } end,
           desc = "Dismiss notifications",
         },
         ["<Leader>un"] = {
