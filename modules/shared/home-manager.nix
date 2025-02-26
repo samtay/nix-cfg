@@ -27,9 +27,33 @@ let name = "Sam Tay";
         # program = "${lib.getExe' pkgs._1password-gui "op-ssh-sign"}";
         # program = "/opt/1Password/op-ssh-sign";
       };
+      column = {
+        ui = "auto";
+      };
+      help = {
+        autocorrect = "prompt";
+      };
+      core = {
+        fsmonitor = true;
+        untrackedCache = true;
+      };
+      merge = {
+        conflictstyle = "zdiff3";
+      };
+      commit = {
+        verbose = true;
+      };
+      rerere = {
+        enabled = true;
+        autoupdate= true;
+      };
       branch = {
         autosetuprebase = "always";
         rebase = true;
+        sort = "-committerdate";
+      };
+      tag = {
+        sort = "version:refname";
       };
       advice = {
         detachedHead = false;
@@ -37,8 +61,29 @@ let name = "Sam Tay";
       init = {
         defaultBranch = "main";
       };
+      rebase = {
+        autoSquash = true;
+        autoStash = true;
+        updateRefs = true;
+      };
       push = {
+        default = "simple";
         autoSetupRemote = true;
+        followTags = true;
+      };
+      pull = {
+        rebase = true;
+      };
+      fetch = {
+        prune = true;
+        pruneTags = true;
+        all = true;
+      };
+      diff = {
+        algorithm = "histogram";
+        mnemonicPrefix = true;
+        colorMoved = "plain";
+        renames = true;
       };
     };
     attributes = ["*.pdf diff=pdf"];
@@ -51,6 +96,10 @@ let name = "Sam Tay";
         syntax-theme = "gruvbox-light";
         whitespace-error-style = "22 reverse"; # ?
       };
+    };
+    maintenance = {
+      enable = true;
+      repositories = ["${config.home.homeDirectory}/code/mwb" "${config.home.homeDirectory}/code/mwb-2"];
     };
     aliases = {
       # List commits in short form, with colors and branch/tag annotations
