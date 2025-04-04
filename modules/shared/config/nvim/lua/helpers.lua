@@ -1,6 +1,6 @@
 local helpers = {}
 
-local spec_comment_lines = { "-- $> hspec-spec", "" }
+local spec_comment_lines = { "-- $> hspec spec", "" }
 local spec_web_comment_lines = { "-- $> :import-spec-web", "", "-- $> hspecWithEnv spec", "" }
 
 local function add_hspec_comments()
