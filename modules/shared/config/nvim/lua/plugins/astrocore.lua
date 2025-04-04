@@ -65,7 +65,10 @@ return {
       },
       x = {
         ["<Leader>/"] = {
-          "\"zy<cmd>exec 'Telescope grep_string default_text=' . escape(@z, ' ')<cr>",
+          function()
+            local text = require("helpers").get_visual_selection()
+            require("telescope.builtin").grep_string { search = text }
+          end,
           expr = false,
           desc = "Live grep selection",
         },

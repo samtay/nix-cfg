@@ -57,4 +57,21 @@ function helpers.toggle_hspec_comments()
   end
 end
 
+function helpers.get_visual_selection()
+  local current_clipboard_content = vim.fn.getreg '"'
+
+  vim.cmd 'noau normal! "vy"'
+  local text = vim.fn.getreg "v"
+  vim.fn.setreg("v", {})
+
+  vim.fn.setreg('"', current_clipboard_content)
+
+  text = string.gsub(text, "\n", "")
+  if #text > 0 then
+    return text
+  else
+    return ""
+  end
+end
+
 return helpers
