@@ -74,7 +74,7 @@ return {
         },
         ["<Leader>h"] = { false, desc = ">>= Haskell" },
         ["<Leader>hd"] = {
-          "\"zy<cmd>exec 'lua vim.ui.open(\"https://hoogle.internal.mercury.com/?hoogle=' .. escape(@z, ' ') . '\")'<cr>",
+          "\"zy<cmd>exec 'lua vim.ui.open(\"https://hoogle.dmz.internal.mercury.com/?hoogle=' .. escape(@z, ' ') . '\")'<cr>",
           expr = false,
           desc = "Open documentation for selected text",
         },
@@ -231,7 +231,7 @@ return {
         ---------------------- haskell ----------------------
         ["<Leader>h"] = { false, desc = ">>= Haskell" },
         ["<Leader>hd"] = {
-          function() vim.ui.open("https://hoogle.internal.mercury.com/?hoogle=" .. vim.fn.expand "<cWORD>") end,
+          function() vim.ui.open("https://hoogle.dmz.internal.mercury.com/?hoogle=" .. vim.fn.expand "<cWORD>") end,
           desc = "Open documentation for symbol under cursor",
         },
         ["<Leader>hf"] = {
