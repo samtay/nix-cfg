@@ -1,0 +1,203 @@
+// Zed keymap
+//
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+//
+// To see the default key bindings run `zed: open default keymap`
+// from the command palette.
+[
+  {
+    "context": "Workspace",
+    "bindings": {
+      "cmd-r": null,
+      "cmd-shift-r": null,
+      "cmd-h": null,
+      "cmd-l": null
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "cmd-r": "buffer_search::DeployReplace",
+      "cmd-shift-r": ["pane::DeploySearch", { "replace_enabled": true }],
+      "cmd-t": "terminal_panel::ToggleFocus",
+      "cmd-h": "pane::ActivatePreviousItem",
+      "cmd-l": "pane::ActivateNextItem"
+    }
+  },
+  {
+    "context": "Pane",
+    "bindings": {
+      "cmd-h": "pane::ActivatePreviousItem",
+      "cmd-l": "pane::ActivateNextItem"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == normal && !menu",
+    "bindings": {
+      // Split navigation (hjkl)
+      "space w h": "workspace::ActivatePaneLeft",
+      "space w j": "workspace::ActivatePaneDown",
+      "space w k": "workspace::ActivatePaneUp",
+      "space w l": "workspace::ActivatePaneRight",
+
+      // Haskell compile/test tasks
+      "space h r": ["task::Spawn", { "task_name": "touch revdeps" }],
+      "space h a": ["task::Spawn", { "task_name": "compile all modules" }],
+      "space h t": [
+        "task::Spawn",
+        { "task_name": "toggle: test current spec" }
+      ],
+      "space h shift-t": [
+        "task::Spawn",
+        { "task_name": "toggle: run foundational tests" }
+      ],
+
+      // Diagnostics navigation
+      "space e t": "outline::Toggle",
+      "space e e": "diagnostics::Deploy",
+      "space e j": "editor::GoToDiagnostic",
+      "space e k": "editor::GoToPreviousDiagnostic",
+      "space e o": "editor::Hover",
+
+      // Right dock
+      "space g t": "git_panel::ToggleFocus",
+      "space g shift-t": "workspace::ToggleLeftDock",
+      "space f t": "project_panel::ToggleFocus",
+      "space f shift-t": "workspace::ToggleLeftDock",
+      "space o t": "outline_panel::ToggleFocus",
+      "space o shift-t": "workspace::ToggleLeftDock",
+
+      // File explorer / finder
+      "space f f": "file_finder::Toggle",
+      "space f b": "tab_switcher::Toggle",
+      "space tab": ["workspace::SendKeystrokes", "space f b enter"],
+      "space /": "pane::DeploySearch",
+
+      // Window management
+      "space w /": "pane::SplitRight",
+      "space w -": "pane::SplitDown",
+      "space w d": "pane::CloseActiveItem",
+      "space w enter": "pane::CloseInactiveItems",
+
+      // LSP actions
+      "g d": "editor::GoToDefinition",
+      "g D": "editor::GoToDefinitionSplit",
+      "g t": "editor::GoToTypeDefinition",
+      "g T": "editor::GoToTypeDefinitionSplit",
+      "g i": "editor::GoToImplementation",
+      "g I": "editor::GoToImplementationSplit",
+      "g r": "editor::FindAllReferences",
+      "g a": "editor::ToggleCodeActions",
+      "shift-k": "editor::Hover",
+
+      // Misc
+      "space ;": "editor::ToggleComments",
+      "space s": "workspace::Save",
+      "space S": "workspace::SaveAll",
+
+      // UI
+      "space u h": "editor::ToggleInlayHints",
+      "space u b": "editor::ToggleGitBlameInline",
+
+      // Settings
+      "space . k": "zed::OpenKeymap",
+      "space . t": "zed::OpenTasks",
+      "space . z": "zed::OpenSettings",
+
+      // Git stuff
+      "space g b": "git::Blame",
+
+      // AI
+      "space a t": "workspace::ToggleRightDock"
+    }
+  },
+  {
+    // Visual mode mappings (selection-specific)
+    "context": "Editor && vim_mode == visual && !menu",
+    "bindings": {
+      "space /": "pane::DeploySearch",
+      "space ;": "editor::ToggleComments" // Toggle comment in selection
+    }
+  },
+  {
+    // Optional global context for file finder when no editor is open
+    "context": "EmptyPane || SharedScreen",
+    "bindings": {
+      "space f f": "file_finder::Toggle",
+      "space w d": ["pane::CloseActiveItem", { "close_pinned": false }]
+    }
+  },
+  // {
+  //   "context": "Editor && (showing_code_actions || showing_completions)",
+  //   "bindings": {
+  //     "tab": "editor::ContextMenuNext",
+  //     "shift-tab": "editor::ContextMenuPrevious"
+  //   }
+  // },
+  {
+    "context": "Picker > Editor",
+    "bindings": {
+      "shift-tab": "menu::SelectPrevious",
+      "tab": "menu::SelectNext",
+      "enter": "picker::ConfirmCompletion"
+    }
+  },
+  {
+    "context": "FileFinder || (FileFinder > Picker > Editor) || (FileFinder > Picker > menu)",
+    "bindings": {
+      "cmd-/": "pane::SplitRight",
+      "cmd--": "pane::SplitDown"
+    }
+  },
+  {
+    // Pane settings
+    "context": "Pane",
+    "bindings": {
+      "space f f": "file_finder::Toggle",
+      "space w d": ["pane::CloseActiveItem", { "close_pinned": false }],
+      // hack to just close an item when muscle memory wants to switch to prev
+      "space tab": ["pane::CloseActiveItem", { "close_pinned": false }]
+    }
+  },
+  // Right dock
+  {
+    "context": "GitPanel",
+    "bindings": {
+      "space g t": "git_panel::ToggleFocus",
+      "space g shift-t": "workspace::ToggleLeftDock",
+      "space f t": "project_panel::ToggleFocus",
+      "space f shift-t": "workspace::ToggleLeftDock",
+      "space o t": "outline_panel::ToggleFocus",
+      "space o shift-t": "workspace::ToggleLeftDock"
+    }
+  },
+  {
+    "context": "ProjectPanel",
+    "bindings": {
+      "space g t": "git_panel::ToggleFocus",
+      "space g shift-t": "workspace::ToggleLeftDock",
+      "space f t": "project_panel::ToggleFocus",
+      "space f shift-t": "workspace::ToggleLeftDock",
+      "space o t": "outline_panel::ToggleFocus",
+      "space o shift-t": "workspace::ToggleLeftDock"
+    }
+  },
+  {
+    "context": "OutlinePanel",
+    "bindings": {
+      "space g t": "git_panel::ToggleFocus",
+      "space g shift-t": "workspace::ToggleLeftDock",
+      "space f t": "project_panel::ToggleFocus",
+      "space f shift-t": "workspace::ToggleLeftDock",
+      "space o t": "outline_panel::ToggleFocus",
+      "space o shift-t": "workspace::ToggleLeftDock"
+    }
+  },
+  {
+    "context": "Terminal",
+    "bindings": {
+      "cmd-t": "workspace::ToggleBottomDock"
+    }
+  }
+]
