@@ -31,9 +31,12 @@
   "lsp": {
     "hls": {
       "binary": {
-        "path": "static-ls"
+        "path": "static-ls",
+        "arguments": []
       }
     }
   },
-  "auto_indent_on_paste": false
+  "auto_indent_on_paste": false,
+  "ensure_final_newline_on_save": false,
+  "soft_wrap": "editor_width"
 }

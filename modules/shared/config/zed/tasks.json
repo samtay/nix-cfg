@@ -51,5 +51,28 @@
     "args": [],
     "reveal": "never",
     "hide": "always"
+  },
+  {
+    "label": "touch revdeps",
+    "command": "touch-revdeps",
+    "args": ["$ZED_FILE"],
+    "reveal": "never",
+    "hide": "always"
+  },
+  {
+    "label": "open moogle under cursor",
+    "command": "open",
+    "args": ["https://hoogle.dmz.internal.mercury.com/?hoogle=$ZED_SYMBOL"],
+    "reveal": "never",
+    "hide": "always"
+  },
+  {
+    "label": "open moogle for selection",
+    "command": "open",
+    "args": [
+      "https://hoogle.dmz.internal.mercury.com/?hoogle=$ZED_SELECTED_TEXT"
+    ],
+    "reveal": "never",
+    "hide": "always"
   }
 ]

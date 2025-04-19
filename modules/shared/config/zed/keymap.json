@@ -7,22 +7,36 @@
 // from the command palette.
 [
   {
+    "bindings": {
+      "cmd-h": null,
+      "cmd-shift-f": "workspace::ToggleZoom",
+      "cmd-k": "command_palette::Toggle",
+      "cmd-g": "git_panel::ToggleFocus",
+      "cmd-shift-j": "workspace::ToggleBottomDock",
+      "cmd-shift-k": "git_panel::FocusEditor"
+    }
+  },
+  {
     "context": "Workspace",
     "bindings": {
       "cmd-r": null,
       "cmd-shift-r": null,
       "cmd-h": null,
-      "cmd-l": null
+      "cmd-l": null,
+      "cmd-shift-h": "workspace::ToggleLeftDock",
+      "cmd-shift-l": "workspace::ToggleRightDock"
     }
   },
   {
     "context": "Editor",
     "bindings": {
+      // Re-think these, they kinda suck
       "cmd-r": "buffer_search::DeployReplace",
       "cmd-shift-r": ["pane::DeploySearch", { "replace_enabled": true }],
       "cmd-t": "terminal_panel::ToggleFocus",
       "cmd-h": "pane::ActivatePreviousItem",
-      "cmd-l": "pane::ActivateNextItem"
+      "cmd-l": "pane::ActivateNextItem",
+      "cmd-shift-l": "workspace::ToggleRightDock"
     }
   },
   {
@@ -41,9 +55,9 @@
       "space w k": "workspace::ActivatePaneUp",
       "space w l": "workspace::ActivatePaneRight",
 
-      // Haskell compile/test tasks
+      // Haskell
       "space h r": ["task::Spawn", { "task_name": "touch revdeps" }],
-      "space h a": ["task::Spawn", { "task_name": "compile all modules" }],
+      // "space h a": ["task::Spawn", { "task_name": "compile all modules" }],
       "space h t": [
         "task::Spawn",
         { "task_name": "toggle: test current spec" }
@@ -52,6 +66,7 @@
         "task::Spawn",
         { "task_name": "toggle: run foundational tests" }
       ],
+      "space h d": ["task::Spawn", { "task_name": "open moogle under cursor" }],
 
       // Diagnostics navigation
       "space e t": "outline::Toggle",
@@ -70,6 +85,7 @@
 
       // File explorer / finder
       "space f f": "file_finder::Toggle",
+      "space f r": "file_finder::Toggle", // just for muscle memory
       "space f b": "tab_switcher::Toggle",
       "space tab": ["workspace::SendKeystrokes", "space f b enter"],
       "space /": "pane::DeploySearch",
@@ -95,10 +111,20 @@
       "space ;": "editor::ToggleComments",
       "space s": "workspace::Save",
       "space S": "workspace::SaveAll",
+      "space #": "editor::SelectAllMatches",
+      "enter": ["workspace::SendKeystrokes", "o escape k"],
+      "shift-enter": ["workspace::SendKeystrokes", "O escape"],
+      "space j": "vim::PushSneak",
+      "space k": "vim::PushSneakBackward",
+      "j": ["vim::Down", { "display_lines": true }],
+      "k": ["vim::Up", { "display_lines": true }],
 
       // UI
       "space u h": "editor::ToggleInlayHints",
       "space u b": "editor::ToggleGitBlameInline",
+      "cmd-shift-h": "workspace::ToggleLeftDock",
+      "cmd-shift-l": "workspace::ToggleRightDock",
+      "cmd-shift-k": "workspace::ToggleBottomDock",
 
       // Settings
       "space . k": "zed::OpenKeymap",
@@ -107,17 +133,31 @@
 
       // Git stuff
       "space g b": "git::Blame",
+      "space g p": "git::Push",
+      "space g P": "git::ForcePush",
 
       // AI
       "space a t": "workspace::ToggleRightDock"
     }
   },
   {
+    "context": "GitDiff > Editor",
+    "bindings": {
+      "space g k": "editor::GoToPreviousHunk",
+      "space g j": "editor::GoToHunk",
+      "space g s": "git::StageAndNext",
+      "space g S": "git::UnstageAndNext"
+    }
+  },
+  {
     // Visual mode mappings (selection-specific)
     "context": "Editor && vim_mode == visual && !menu",
     "bindings": {
-      "space /": "pane::DeploySearch",
-      "space ;": "editor::ToggleComments" // Toggle comment in selection
+      // Just needed for the next binding, to sequence pressing enter
+      "space cmd+alt+shift+s": "pane::DeploySearch",
+      "space /": ["workspace::SendKeystrokes", "space cmd+alt+shift+s enter"],
+      "space ;": "editor::ToggleComments",
+      "space h d": ["task::Spawn", { "task_name": "open moogle for selection" }]
     }
   },
   {
@@ -164,17 +204,21 @@
   {
     "context": "GitPanel",
     "bindings": {
+      "cmd-h": null,
       "space g t": "git_panel::ToggleFocus",
       "space g shift-t": "workspace::ToggleLeftDock",
       "space f t": "project_panel::ToggleFocus",
       "space f shift-t": "workspace::ToggleLeftDock",
       "space o t": "outline_panel::ToggleFocus",
-      "space o shift-t": "workspace::ToggleLeftDock"
+      "space o shift-t": "workspace::ToggleLeftDock",
+      "space g p": "git::Push",
+      "space g P": "git::ForcePush"
     }
   },
   {
     "context": "ProjectPanel",
     "bindings": {
+      "cmd-h": null,
       "space g t": "git_panel::ToggleFocus",
       "space g shift-t": "workspace::ToggleLeftDock",
       "space f t": "project_panel::ToggleFocus",
@@ -186,6 +230,7 @@
   {
     "context": "OutlinePanel",
     "bindings": {
+      "cmd-h": null,
       "space g t": "git_panel::ToggleFocus",
       "space g shift-t": "workspace::ToggleLeftDock",
       "space f t": "project_panel::ToggleFocus",
@@ -198,6 +243,14 @@
     "context": "Terminal",
     "bindings": {
       "cmd-t": "workspace::ToggleBottomDock"
+    }
+  },
+  {
+    "context": "AgentPanel",
+    "bindings": {
+      "cmd-shift-h": "workspace::ToggleLeftDock",
+      "cmd-shift-l": "workspace::ToggleRightDock",
+      "cmd-shift-k": "workspace::ToggleBottomDock"
     }
   }
 ]
