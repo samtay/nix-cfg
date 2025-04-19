@@ -5,6 +5,13 @@
 //
 // To see the default key bindings run `zed: open default keymap`
 // from the command palette.
+//
+// TODO:
+// - Tab through code actions (maybe global Tab mapping and editor/insert set to null?)
+// - Fuzzy select code action? fuzzy live grep?
+// - Make a `space h f` mapping again
+//    - needs (1) symbol under cursor and (2) an open file at path cmd
+// - Get persistent model syntax highlighting working
 [
   {
     "bindings": {
