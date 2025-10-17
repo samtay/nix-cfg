@@ -7,36 +7,53 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "context_servers": {
+    "postgres-context-server": {
+      "source": "extension",
+      "enabled": true,
+      "settings": {
+        "database_url": "postgresql://mercury-web-backend@localhost:5432/mercury-web-backend-development"
+      }
+    }
+  },
+  "tab_bar": {
+    "show": true
+  },
   "features": {
     "edit_prediction_provider": "zed"
+    // "edit_prediction_provider": "copilot"
   },
   "project_panel": {
     "hide_gitignore": true
   },
-  "assistant": {
+  "agent": {
+    "always_allow_tool_actions": true,
+    "play_sound_when_agent_done": true,
     "default_model": {
       "provider": "anthropic",
-      "model": "claude-3-5-sonnet-latest"
-    },
-    "version": "2"
+      "model": "claude-sonnet-4-latest"
+    }
   },
   "vim_mode": true,
-  "ui_font_size": 16,
-  "buffer_font_size": 16,
+  "ui_font_size": 14,
+  "buffer_font_size": 12,
   "theme": {
     "mode": "system",
-    "light": "Gruvbox Light",
+    "light": "Gruvbox Light Hard",
     "dark": "Gruvbox Dark"
   },
   "lsp": {
     "hls": {
       "binary": {
-        "path": "static-ls",
+        "path": "/Users/samtay/code/mwb/.bin/static-ls",
         "arguments": []
       }
     }
   },
   "auto_indent_on_paste": false,
+  "auto_indent": false,
   "ensure_final_newline_on_save": false,
-  "soft_wrap": "editor_width"
+  "soft_wrap": "editor_width",
+  "go_to_definition_fallback": "none",
+  "file_types": { "Haskell": ["persistentmodels", "yesodroutes"] }
 }

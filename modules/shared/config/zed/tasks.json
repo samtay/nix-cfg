@@ -46,6 +46,13 @@
     // "shell": "system"
   },
   {
+    "label": "compile all",
+    "command": "touch",
+    "args": ["src/Application.hs"],
+    "reveal": "never",
+    "hide": "always"
+  },
+  {
     "label": "toggle: run foundational tests",
     "command": "toggle-foundational-tests",
     "args": [],
@@ -57,7 +64,7 @@
     "command": "touch-revdeps",
     "args": ["$ZED_FILE"],
     "reveal": "never",
-    "hide": "always"
+    "hide": "on_success"
   },
   {
     "label": "open moogle under cursor",
@@ -72,6 +79,13 @@
     "args": [
       "https://hoogle.dmz.internal.mercury.com/?hoogle=$ZED_SELECTED_TEXT"
     ],
+    "reveal": "never",
+    "hide": "always"
+  },
+  {
+    "label": "expand template haskell",
+    "command": "toggle-dump-splices",
+    "args": ["$ZED_FILE"],
     "reveal": "never",
     "hide": "always"
   }

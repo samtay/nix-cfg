@@ -15,7 +15,7 @@
 [
   {
     "bindings": {
-      "cmd-h": null,
+      "cmd-h": "pane::ActivatePreviousItem",
       "cmd-shift-f": "workspace::ToggleZoom",
       "cmd-k": "command_palette::Toggle",
       "cmd-g": "git_panel::ToggleFocus",
@@ -28,7 +28,7 @@
     "bindings": {
       "cmd-r": null,
       "cmd-shift-r": null,
-      "cmd-h": null,
+      "cmd-h": "pane::ActivatePreviousItem",
       "cmd-l": null,
       "cmd-shift-h": "workspace::ToggleLeftDock",
       "cmd-shift-l": "workspace::ToggleRightDock"
@@ -61,10 +61,11 @@
       "space w j": "workspace::ActivatePaneDown",
       "space w k": "workspace::ActivatePaneUp",
       "space w l": "workspace::ActivatePaneRight",
+      "space w =": "vim::ResetPaneSizes",
 
       // Haskell
       "space h r": ["task::Spawn", { "task_name": "touch revdeps" }],
-      // "space h a": ["task::Spawn", { "task_name": "compile all modules" }],
+      "space h a": ["task::Spawn", { "task_name": "compile all" }],
       "space h t": [
         "task::Spawn",
         { "task_name": "toggle: test current spec" }
@@ -74,6 +75,7 @@
         { "task_name": "toggle: run foundational tests" }
       ],
       "space h d": ["task::Spawn", { "task_name": "open moogle under cursor" }],
+      "space h m": ["task::Spawn", { "task_name": "expand template haskell" }],
 
       // Diagnostics navigation
       "space e t": "outline::Toggle",
@@ -81,6 +83,7 @@
       "space e j": "editor::GoToDiagnostic",
       "space e k": "editor::GoToPreviousDiagnostic",
       "space e o": "editor::Hover",
+      "space e w": "diagnostics::ToggleWarnings",
 
       // Right dock
       "space g t": "git_panel::ToggleFocus",
@@ -101,7 +104,9 @@
       "space w /": "pane::SplitRight",
       "space w -": "pane::SplitDown",
       "space w d": "pane::CloseActiveItem",
-      "space w enter": "pane::CloseInactiveItems",
+      "space w enter": "pane::CloseOtherItems",
+      "space w shift-enter": "workspace::CloseInactiveTabsAndPanes",
+      "space w D": "pane::CloseAllItems",
 
       // LSP actions
       "g d": "editor::GoToDefinition",
@@ -140,8 +145,8 @@
 
       // Git stuff
       "space g b": "git::Blame",
-      "space g p": "git::Push",
-      "space g P": "git::ForcePush",
+      "space g l": "editor::CopyPermalinkToLine",
+      "space g P": "git::Push",
 
       // AI
       "space a t": "workspace::ToggleRightDock"
@@ -175,13 +180,20 @@
       "space w d": ["pane::CloseActiveItem", { "close_pinned": false }]
     }
   },
-  // {
-  //   "context": "Editor && (showing_code_actions || showing_completions)",
-  //   "bindings": {
-  //     "tab": "editor::ContextMenuNext",
-  //     "shift-tab": "editor::ContextMenuPrevious"
-  //   }
-  // },
+  {
+    "context": "Editor && (showing_code_actions || showing_completions)",
+    "bindings": {
+      "tab": "editor::ContextMenuNext",
+      "shift-tab": "editor::ContextMenuPrevious"
+    }
+  },
+  {
+    "context": "Editor && showing_code_actions",
+    "use_key_equivalents": true,
+    "bindings": {
+      "enter": "editor::ConfirmCodeAction"
+    }
+  },
   {
     "context": "Picker > Editor",
     "bindings": {
@@ -202,9 +214,11 @@
     "context": "Pane",
     "bindings": {
       "space f f": "file_finder::Toggle",
-      "space w d": ["pane::CloseActiveItem", { "close_pinned": false }],
+      "space w d": ["pane::CloseActiveItem", { "close_pinned": false }]
       // hack to just close an item when muscle memory wants to switch to prev
-      "space tab": ["pane::CloseActiveItem", { "close_pinned": false }]
+      // TODO: figure out where I want this and use the key context to target it better!
+      // Right now it affects editor view
+      // "space tab": ["pane::CloseActiveItem", { "close_pinned": false }]
     }
   },
   // Right dock
@@ -258,6 +272,12 @@
       "cmd-shift-h": "workspace::ToggleLeftDock",
       "cmd-shift-l": "workspace::ToggleRightDock",
       "cmd-shift-k": "workspace::ToggleBottomDock"
+    }
+  },
+  {
+    "context": "Diagnostics",
+    "bindings": {
+      "space e w": "diagnostics::ToggleWarnings"
     }
   }
 ]
