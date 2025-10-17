@@ -86,11 +86,11 @@ return {
         },
       },
       hls = {
-        cmd = { "static-ls" },
+        cmd = { "/Users/samtay/code/mwb/.bin/static-ls" },
         settings = {
           haskell = {
             cabalFormattingProvider = "cabalfmt",
-            formattingProvider = "fourmolu",
+            formattingProvider = "/Users/samtay/code/mwb/.bin/fourmolu",
           },
         },
         filetypes = { "haskell", "lhaskell", "cabal" },
