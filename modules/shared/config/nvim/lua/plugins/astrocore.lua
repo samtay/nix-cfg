@@ -36,7 +36,6 @@ return {
         splitright = true,
         scrolloff = 4,
         -- formatoptions = vim.opt.formatoptions, ?
-        clipboard = "",
       },
       g = { -- vim.g.<key>
         -- configure global vim variables (vim.g)
@@ -57,9 +56,6 @@ return {
           function() require("telescope.builtin").lsp_definitions() end,
           desc = "Definition of current word",
         },
-        ["gy"] = { '"+y', desc = "Copy to system clipboard" },
-        ["gp"] = { '"+p', desc = "Paste from system clipboard" },
-        ["gP"] = { '"+P', desc = "Paste from system clipboard" },
         ["<Leader>o"] = false,
         ["<C-s>"] = { "<cmd>w !sudo tee > /dev/null %<cr>", desc = "Force save", expr = false },
       },
