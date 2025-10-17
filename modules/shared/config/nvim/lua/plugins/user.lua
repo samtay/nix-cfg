@@ -187,10 +187,21 @@ return {
       },
       formatters = {
         mwb_format = {
-          command = "run-format",
-          args = { "--stdio" },
+          command = "treefmt",
+          args = { "--stdin", "$FILENAME" },
         },
       },
     },
+  },
+
+  -- gitlinker for GitHub permalinks
+  {
+    "linrongbin16/gitlinker.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    cmd = "GitLink",
+    keys = {
+      { "<Leader>gl", "<cmd>GitLink<cr>", mode = { "n", "v" }, desc = "Git permalink" },
+    },
+    opts = {},
   },
 }
