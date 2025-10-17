@@ -155,22 +155,6 @@ return {
       }
     end,
   },
-
-  -- customizing community packs
-  {
-    "zbirenbaum/copilot.lua",
-    opts = {
-      suggestion = {
-        keymap = {
-          accept = "<C-CR>",
-          accept_word = false,
-          accept_line = false,
-          next = "<C-.>",
-          prev = "<C-,>",
-        },
-      },
-    },
-  },
   {
     "gruvbox.nvim",
     opts = {
