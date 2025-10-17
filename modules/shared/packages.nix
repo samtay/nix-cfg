@@ -17,6 +17,8 @@ with pkgs; [
   tealdeer
   nix-your-shell
   nixd
+  devenv
+  pgcli
 
   # Encryption and security tools
   gnupg
