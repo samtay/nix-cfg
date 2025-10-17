@@ -1,7 +1,6 @@
 local helpers = {}
 
 local spec_comment_lines = { "-- $> hspec spec", "" }
-local spec_web_comment_lines = { "-- $> :import-spec-web", "", "-- $> hspecWithEnv spec", "" }
 
 local function add_hspec_comments()
   local function add_hspec_comment(search_string, comment_lines)
@@ -21,7 +20,7 @@ local function add_hspec_comments()
 
   local has_spec_comment = add_hspec_comment(":: Spec$", spec_comment_lines)
 
-  if not has_spec_comment then add_hspec_comment(":: SpecWeb$", spec_web_comment_lines) end
+  if not has_spec_comment then add_hspec_comment(":: SpecWeb$", spec_comment_lines) end
 end
 
 local function delete_hspec_comments()
@@ -44,7 +43,6 @@ local function delete_hspec_comments()
   end
 
   delete_hspec_comment(spec_comment_lines)
-  delete_hspec_comment(spec_web_comment_lines)
 end
 
 function helpers.toggle_hspec_comments()
